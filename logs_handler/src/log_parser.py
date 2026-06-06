@@ -205,21 +205,21 @@ class LogsParser:
 
                 return True
 
-    def _save_to_redis(self , case_id : int , features : dict) -> None:
+    def _save_to_redis(self) -> None:
 
         r = self._get_redis()
 
-        main_key = f"artifacts:logs:{case_id}"
+        main_key = f"artifacts:logs:{self.case_id}"
 
-        r.set(main_key, json.dumps(features), ex = 7200)
+        r.set(main_key, json.dumps(self.features), ex = 7200)
 
-        for i , (feature_name , feature_val) in enumerate(features.items()):
+        for i , (feature_name , feature_val) in enumerate(self.features.items()):
 
             if feature_name in ["count_failed_logins" , "brute_force",
                                 "shh_login", "new_systemd_service",
                                 "log_tampering"]:
 
-                artifact_id = f"log:{feature_name}:{case_id[:4]}"
+                artifact_id = f"log:{feature_name}:{self.case_id[:4]}"
 
                 r.set(
                     f"artifact_id : {artifact_id}",

@@ -1,6 +1,6 @@
 import pandas as pd
 
-class DF_Logs_Generator():
+class DFLogGenerator():
 
     def __init__(self , features, case_id):
 
@@ -38,17 +38,17 @@ class DF_Logs_Generator():
 
         return df
 
-    def generate_df(self , features : dict, case_id : str) -> pd.DataFrame:
+    def generate_df(self) -> None:
 
-        df = pd.DataFrame([features])
+        df = pd.DataFrame([self.features])
 
         self._clean_data(df)
 
         if not df.empty:
 
-            df.insert(0, "CASE_ID", case_id)
+            df.insert(0, "CASE_ID", self.case_id)
 
-        return df
+        df.to_csv(f"temp/logs_df_{self.case_id}.csv" , index = False)
 
-
+df_log_generator = DFLogGenerator()
 
