@@ -104,3 +104,5 @@ class DFLogPreprocessor():
                                index = X.index)
 
         return X_final , case_id
+
+df_log_preprocessor = DFLogPreprocessor()
