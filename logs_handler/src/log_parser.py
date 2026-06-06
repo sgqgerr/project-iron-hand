@@ -234,7 +234,9 @@ class LogsParser:
                     ),
 
                     ex=7200
+
                 )
+
         logging.info(f"Successfully saved to Redis {main_key}...")
 
     def parse_log_file(self , log_path : str, to_redis : bool) -> dict:
@@ -266,6 +268,7 @@ class LogsParser:
             "total_lines" : lines,
             "log_path" : log_path,
             "parsed_at" : dt.utcnow().isoformat()
+
         }
 
         if to_redis:
