@@ -205,6 +205,51 @@ class LogsParser:
 
                 return True
 
+    def _detect_new_cron_job(self , lines : list[str]) -> bool:
+
+        patterns = [
+            r"CRON\[\d+\]:\s+\(root\)\s+CMD",
+            r"crontab:\s+installing new crontab",
+            r"crontab -e",
+        ]
+
+        for line in lines:
+
+            for pattern in patterns:
+
+                if re.search(line, pattern , re.IGNORECASE):
+
+                    return True
+
+        return False
+
+    def _detect_encoded_cmd(self , lines : list[str]) -> bool:
+
+        b64_pattern = re.compile(r'[A-Za-z0-9+/]{40,}={0,2}')
+
+        encoded_patterns = [
+            r"base64\s+-d",
+            r"base64\s+--decode",
+            r"\|\s*bash",
+            r"echo\s+.+\|\s*sh",
+            r"eval\s+\$\(",
+        ]
+
+
+        for line in lines:
+
+            for pattern in encoded_patterns:
+
+                if re.search(line , pattern, re.IGNORECASE):
+
+                    return True
+
+            if b64_pattern.search(line):
+
+                return True
+
+        return False
+
     def _save_to_redis(self) -> None:
 
         r = self._get_redis()
@@ -257,6 +302,10 @@ class LogsParser:
 
         log_tampering = self._detect_log_tampering(lines)
 
+        new_cron_job = self._detect_new_cron_job(lines)
+
+        encoded_cmd = self._detect_encoded_cmd(lines)
+
         features = {
 
             "count_failed_logins" : count_failed_logins,
@@ -264,6 +313,8 @@ class LogsParser:
             "shh_login" : shh_login,
             "new_systemd_service" : new_systemd_service,
             "log_tampering" : log_tampering,
+            "new_cron_job" : new_cron_job,
+            "encoded_cmd" : encoded_cmd,
 
             "total_lines" : lines,
             "log_path" : log_path,

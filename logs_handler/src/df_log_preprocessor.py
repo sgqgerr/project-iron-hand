@@ -12,7 +12,8 @@ class DFLogPreprocessor():
     NUMERIC_FEATURES = ["count_failed_logins"]
 
     BOOL_FEATURES = ["brute_force", "shh_login",
-                          "new_systemd_service", "log_tampering"]
+                     "new_systemd_service", "log_tampering",
+                     "new_cron_job", "encoded_cmd"]
 
     FEATURE_ORDER = NUMERIC_FEATURES + BOOL_FEATURES
 

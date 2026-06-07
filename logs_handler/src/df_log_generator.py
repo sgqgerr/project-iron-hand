@@ -20,7 +20,8 @@ class DFLogGenerator():
         numeric_col = ["count_failed_logins"]
 
         boolean_cols = ["brute_force", "shh_login",
-                        "new_systemd_service", "log_tampering"]
+                        "new_systemd_service", "log_tampering",
+                        "new_cron_job", "encoded_cmd"]
 
         for col in numeric_col:
 
