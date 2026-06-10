@@ -1,5 +1,4 @@
 import xgboost as xgb
-import shap
 import pandas as pd
 import logging
 import joblib as jl
@@ -63,7 +62,24 @@ class LogModelTrainLaunch():
 
         logging.info(f"Trained model saved at {self.MODEL_PATH}")
 
-    # TODO : Refactor func and implement logic
-    def predict(self , X : pd.DataFrame , case_id : pd.Series) -> None:
+    def predict(self , X : pd.DataFrame) -> dict:
 
-        pass
+        if self.model is None:
+
+            logging.error(f"Trained model was not trained at {self.MODEL_PATH}")
+
+        try:
+
+            preds = self.model.predict(X)
+
+            result = {
+                "score" : preds.tolist(),
+            }
+
+        except Exception as e:
+
+            logging.error(e)
+
+            result = {"score": None}
+
+        return result
