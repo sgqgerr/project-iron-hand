@@ -88,3 +88,5 @@ class DfMemoryPreprocessor:
                 X[col] = X[col].astype(int)
 
         return X.astype("float32")
+
+df_memory_preprocessor = DfMemoryPreprocessor()

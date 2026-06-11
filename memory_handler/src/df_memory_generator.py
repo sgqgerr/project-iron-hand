@@ -195,3 +195,5 @@ class DfMemoryGenerator:
                 df[col] = df[col].astype(int)
 
         return df
+
+df_memory_generator = DfMemoryGenerator()

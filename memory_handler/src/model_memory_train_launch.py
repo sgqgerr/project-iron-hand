@@ -171,3 +171,5 @@ class MemoryModelTrainLaunch:
                 X[col] = X[col].astype(int)
 
         return X.astype("float32")
+
+model_train_launch = MemoryModelTrainLaunch()

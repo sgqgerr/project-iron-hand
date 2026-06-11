@@ -78,7 +78,7 @@ class LogsParser:
 
                 ts_str = time_match.group(1)
 
-                ts = dt.strptime(ts_str, f"2024 {ts_str}", "%Y %b %d %H:%M:%S")
+                ts = dt.datetime.strptime(ts_str, f"2024 {ts_str}", "%Y %b %d %H:%M:%S")
 
                 failed_timestamps.append(ts)
 
@@ -144,7 +144,7 @@ class LogsParser:
 
                     is_whitelisted = any(w in line.lower() for w in whitelist)
 
-                    if is_whitelisted:
+                    if  not is_whitelisted:
 
                         return True
 
@@ -181,7 +181,7 @@ class LogsParser:
 
                 try:
 
-                    ts = dt.strptime(f"2024 {time_match.group(1)}", "%Y %b %d %H:%M:%S")
+                    ts = dt.datetime.strptime(f"2024 {time_match.group(1)}", "%Y %b %d %H:%M:%S")
 
                     timestamps.append(ts.timestamp())
 
@@ -217,7 +217,7 @@ class LogsParser:
 
             for pattern in patterns:
 
-                if re.search(line, pattern , re.IGNORECASE):
+                if re.search(pattern , line , re.IGNORECASE):
 
                     return True
 
@@ -240,7 +240,7 @@ class LogsParser:
 
             for pattern in encoded_patterns:
 
-                if re.search(line , pattern, re.IGNORECASE):
+                if re.search(pattern , line , re.IGNORECASE):
 
                     return True
 

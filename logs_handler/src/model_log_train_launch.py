@@ -83,3 +83,5 @@ class LogModelTrainLaunch():
             result = {"score": None}
 
         return result
+
+log_model_train_launch = LogModelTrainLaunch()
