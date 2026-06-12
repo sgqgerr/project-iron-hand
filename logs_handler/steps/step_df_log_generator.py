@@ -1,9 +1,13 @@
 from zenml import step
-from logs_handler.src.df_log_generator import df_log_generator
-import pandas as pd
+from logs_handler.src.df_log_generator import DFLogGenerator
+import os
 
 
 @step
-def step_df_log_generator(features: dict, case_id: str) -> pd.DataFrame:
+def step_df_log_generator(features: dict, case_id: str) -> None:
 
-    return df_log_generator.generate_df(features=features, case_id=case_id)
+    os.makedirs("temp", exist_ok=True)
+
+    generator = DFLogGenerator(features=features, case_id=case_id)
+
+    generator.generate_df()

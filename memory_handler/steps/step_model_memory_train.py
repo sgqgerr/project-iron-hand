@@ -8,4 +8,5 @@ def step_model_memory_train(
     X_train: pd.DataFrame,
     y_train: pd.Series,
 ) -> None:
+
     model_train_launch.train(X_train=X_train, y_train=y_train)
