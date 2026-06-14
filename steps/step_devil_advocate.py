@@ -6,14 +6,10 @@ from source.devil_advocate import DevilAdvocate
 logger = get_logger(__name__)
 
 @step
-def step_devil_advocate(payload : json.JSONDecoder):
+def step_devil_advocate(payload : dict) -> dict:
 
     logger.info("Launching devil advocate...")
 
-    devil_advocate_obj = DevilAdvocate(payload)
-
-    result = devil_advocate_obj.devil_advocate()
-
-    return result
+    return DevilAdvocate(payload).devil_advocate()
 
 

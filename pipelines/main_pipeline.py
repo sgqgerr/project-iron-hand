@@ -11,7 +11,7 @@ def main_pipeline(payload : dict) -> dict:
 
     advocate_result = step_devil_advocate(payload = payload)
 
-    grounding_result = step_grounding_verification(devil_advocate_result = advocate_result)
+    grounding_result = step_grounding_verification(payload = payload , devil_advocate_result = advocate_result)
 
     nli_result = step_nli_classification(grounding_result = grounding_result, devil_advocate_result = advocate_result)
 
@@ -22,7 +22,8 @@ def main_pipeline(payload : dict) -> dict:
                                                     grounding_result = grounding_result ,
                                                     nli_result = nli_result)
 
-    narrative_report = step_narrative_generator(advocate_result = advocate_result ,
+    narrative_report = step_narrative_generator(findings = payload,
+                                                advocate_result = advocate_result ,
                                                 hallucination_result = hallucination_result)
 
     return narrative_report

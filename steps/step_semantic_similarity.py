@@ -1,8 +1,8 @@
 from source.semantic_similarity import SemanticSimilarity
-from zenml import logger
+from zenml import get_logger
 from zenml import step
 
-logger = logger.get_logger(__name__)
+logger = get_logger(__name__)
 
 @step
 def step_semantic_similarity(grounding_result : dict) -> dict:

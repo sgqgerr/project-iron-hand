@@ -1,8 +1,8 @@
 from source.nli import NLI_Classification
-from zenml import logger
+from zenml import get_logger
 from zenml import step
 
-logger = logger.get_logger(__name__)
+logger = get_logger.get_logger(__name__)
 
 @step
 def step_nli_classification(grounding_result : dict , devil_advocate_result : dict) -> dict:
@@ -12,6 +12,7 @@ def step_nli_classification(grounding_result : dict , devil_advocate_result : di
     nli_obj = NLI_Classification(grounding_result = grounding_result ,
                        devil_advocate_result = devil_advocate_result)
 
-    result = nli_obj.nli_check()
-
-    return result
+    return nli_obj.nli_check(
+        grounding_result=grounding_result,
+        devil_advocate_result=devil_advocate_result,
+    )

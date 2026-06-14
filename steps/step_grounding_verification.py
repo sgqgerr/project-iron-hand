@@ -1,16 +1,14 @@
 from zenml import step
-from zenml import logger
+from zenml import get_logger
+import redis
 from source.grounding_verification import GroundingVerification
 
-logger = logger.get_logger(__name__)
+logger = get_logger(__name__)
 
-@step
-def step_grounding_verification(advocate_result : dict) -> dict:
+def step_grounding_verification(payload: dict, devil_advocate_result: dict) -> dict:
 
-    logger.info("Launching grounding verification...")
+    r = redis.Redis(host="localhost", port=6379, decode_responses=True)
 
-    grounding_obj = GroundingVerification(advocate_result)
+    obj = GroundingVerification(claim="", client=r, findings=payload)
 
-    result = grounding_obj.grounding_verification()
-
-    return result
+    return obj.grounding_verification(findings=payload)

@@ -20,21 +20,23 @@ def recalculate_confidence(old_confidence: float, counter_arguments: list) -> fl
         for arg in counter_arguments
     )
 
+    return max(round(old_confidence - total_penalty, 3), 0.01)
+
 class DevilAdvocate():
 
     def __init__(self , payload):
 
         self.payload = payload
 
-    async def devil_advocate(payload):
+    def devil_advocate(self):
 
-        hypotheses = payload.get("hypothesis", {})
+        hypotheses = self.payload.get("hypothesis", {})
 
-        artifact_ids = [a.get("artifact_id") for a in payload.get("artifacts", []) if a.get("artifact_id") is not None]
+        artifact_ids = [a.get("artifact_id") for a in self.payload.get("artifacts", []) if a.get("artifact_id") is not None]
 
         if not hypotheses:
 
-            return "No hypotheses in data ..."
+            return {}
 
         results = {}
 

@@ -1,8 +1,8 @@
 from zenml import step
-from zenml import logger
+from zenml import get_logger
 from source.narrative_generator import NarrativeGenerator
 
-logger = logger.get_logger(__name__)
+logger = get_logger(__name__)
 
 @step
 def step_narrative_generator(findings: dict , hallucination_result : dict , advocate_result : dict) -> dict:
